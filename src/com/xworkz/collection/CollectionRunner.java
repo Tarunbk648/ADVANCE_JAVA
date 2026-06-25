@@ -64,7 +64,10 @@ public class CollectionRunner {
         System.out.println();
         System.out.println(ref.containsAll(ref2));  //after addAll method to the ref then it prints true
 
-
+        System.out.println();
+        System.out.println(ref.retainAll(ref2));  //copying ref2 data to the ref
+        System.out.println(ref);
+        System.out.println(ref2);
         //clear() and removeAll method are same but we pass a parameter inside a removeAll method
 
     }

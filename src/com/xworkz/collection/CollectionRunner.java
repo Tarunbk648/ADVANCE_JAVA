@@ -70,6 +70,89 @@ public class CollectionRunner {
         System.out.println(ref2);
         //clear() and removeAll method are same but we pass a parameter inside a removeAll method
 
+        
+        System.out.println();
+        System.out.println("----Treeset---->Sorted Order----->Doesn't allow duplicate values");
+        Collection treeset=new TreeSet();
+        treeset.add("Sunday");
+        treeset.add("Monday");
+        treeset.add("Tuesday");
+        treeset.add("Wednesday");
+        treeset.add("Thursday");
+        treeset.add("Friday");
+        treeset.add("Saturday");
+        treeset.add("Sunday");
+        treeset.add("Monday");
+        System.out.println(treeset);
+
+
+        System.out.println();
+        System.out.println("----Hashset---->Unsorted Order----->Doesn't allow duplicate values");
+        Collection hashSet=new HashSet();
+        hashSet.add("Sunday");
+        hashSet.add("Monday");
+        hashSet.add("Tuesday");
+        hashSet.add("Wednesday");
+        hashSet.add("Thursday");
+        hashSet.add("Friday");
+        hashSet.add("Saturday");
+        hashSet.add("Sunday");
+        hashSet.add("Monday");
+        System.out.println(hashSet);
+
+
+        System.out.println();
+        System.out.println("----LinkedHashSet---->Same order----->Doesn't allow duplicate values");
+        Collection linkedHashSet=new LinkedHashSet();
+        linkedHashSet.add("Sunday");
+        linkedHashSet.add("Monday");
+        linkedHashSet.add("Tuesday");
+        linkedHashSet.add("Wednesday");
+        linkedHashSet.add("Thursday");
+        linkedHashSet.add("Friday");
+        linkedHashSet.add("Saturday");
+        linkedHashSet.add("Sunday");
+        linkedHashSet.add("Monday");
+        System.out.println(linkedHashSet);
+
+        System.out.println();
+        System.out.println("----ArrayList---->Same order----->Allow duplicate values");
+        Collection arrayList=new ArrayList();
+        arrayList.add("Sunday");
+        arrayList.add("Monday");
+        arrayList.add("Tuesday");
+        arrayList.add("Wednesday");
+        arrayList.add("Thursday");
+        arrayList.add("Friday");
+        arrayList.add("Saturday");
+        arrayList.add("Sunday");
+        arrayList.add("Monday");
+        System.out.println(arrayList);
+
+
+        System.out.println();
+        System.out.println("----LinkedList---->Same order----->Allow duplicate values");
+        Collection linkedList=new LinkedList();
+        linkedList.add("Sunday");
+        linkedList.add("Monday");
+        linkedList.add("Tuesday");
+        linkedList.add("Wednesday");
+        linkedList.add("Thursday");
+        linkedList.add("Friday");
+        linkedList.add("Saturday");
+        linkedList.add("Sunday");
+        linkedList.add("Monday");
+        System.out.println(linkedList);
+
+        // Hashset---->  Unsorted order ---> Doesn't allow duplicate values.
+        // Treeset----->  Sorted order-----> Doesn't allow duplicate values.
+        // LinkedHashset----> Same order-----> Doesn't allow duplicate values. 
+
+        // ArrayList----> Same order----> Allow Duplicate values.
+        // LinkedList----> Same order ----> Allow Duplicate values.
+            
+        
+
     }
 }
 

@@ -1,5 +1,6 @@
-package com.xworkz.collection;
+package com.xworkz.collection.customType;
 
+import com.xworkz.collection.constants.PatientEnum;
 import lombok.*;
 
 @Getter
@@ -13,4 +14,5 @@ public class PatientCustom {
      private String patient_contact;
      private String patient_email;
      private String patient_password;
+     private PatientEnum patientEnum;
 }

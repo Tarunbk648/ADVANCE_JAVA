@@ -1,4 +1,4 @@
-package com.xworkz.collection;
+package com.xworkz.collection.inBuiltType;
 
 import java.util.Collection;
 import java.util.Vector;

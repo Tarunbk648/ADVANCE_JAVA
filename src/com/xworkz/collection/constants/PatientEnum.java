@@ -1,4 +1,7 @@
 package com.xworkz.collection.constants;
 
-public enum patientEnum {
+public enum PatientEnum {
+    Male,
+    Female,
+    Other
 }

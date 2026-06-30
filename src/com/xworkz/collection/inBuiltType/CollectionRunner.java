@@ -1,6 +1,5 @@
-package com.xworkz.collection;
+package com.xworkz.collection.inBuiltType;
 
-import java.sql.SQLOutput;
 import java.util.*;
 
 

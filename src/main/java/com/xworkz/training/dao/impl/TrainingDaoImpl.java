@@ -29,7 +29,7 @@ public class TrainingDaoImpl implements TrainingDao {
 
             //4.Statement
             Statement statement=connection.createStatement();
-
+git
             //5.Execute
             statement.execute(query);
 

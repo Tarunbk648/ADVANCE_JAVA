@@ -142,10 +142,15 @@ public class BankingExecuter {
 
                 }
                 System.out.println("Do you wish to continue? (yes/no)");
+
                 yesOrNo=sc.next();
             }
             while (yesOrNo.equalsIgnoreCase("yes"));
             sc.close();
+        }
+
+        else{
+            System.out.println("Please enter a valid option");
         }
     }
 }

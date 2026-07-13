@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+
 public class BankingDto {
     private int user_Id;
     private String user_Name;

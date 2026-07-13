@@ -2,8 +2,7 @@ package com.xworkz.bankingApplication.dao;
 
 import com.xworkz.bankingApplication.dto.BankingDto;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 public interface BankingDao {
     boolean save(BankingDto dto);

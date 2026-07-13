@@ -17,8 +17,7 @@ public class BankingDaoImpl implements BankingDao {
     @Override
     public boolean save(BankingDto dto) {
         boolean isDataSaved = false;
-        try {
-            connection = DriverManager.getConnection(url, username, password);
+        try (Connection connection = DriverManager.getConnection(url, username, password)){
             String query = "insert into banking_info values (?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, dto.getUser_Id());
@@ -30,8 +29,10 @@ public class BankingDaoImpl implements BankingDao {
             int rowsAffected = preparedStatement.executeUpdate();
 
             if (rowsAffected > 0) {
-                System.out.println("User saved successfully");  //Gives message only when the scanner data is saved in a database
+                System.out.println("User saved successfully");
                 isDataSaved = true;
+                preparedStatement.close();
+                connection.close();
             } else {
                 throw new UserSaveFailsException("User not saved");
             }
@@ -47,17 +48,16 @@ public class BankingDaoImpl implements BankingDao {
     public boolean getAllDetailsByEmail(String email) {
         boolean isDataRetrieved = false;
         BankingDto bankingDto = new BankingDto();
-        try {
-            connection = DriverManager.getConnection(url, username, password);
+        try (Connection   connection = DriverManager.getConnection(url, username, password)){
             String query = "select * from banking_info where user_Email=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, email);
 
-            ResultSet resultSet = preparedStatement.executeQuery();  //Resultset is used to store the data retrieved from the database
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                bankingDto.setUser_Id(resultSet.getInt("user_Id"));   //Retrives the user id from the database
-                bankingDto.setUser_Name(resultSet.getString("user_Name")); //Retrives the user name from the database
+                bankingDto.setUser_Id(resultSet.getInt("user_Id"));
+                bankingDto.setUser_Name(resultSet.getString("user_Name"));
                 bankingDto.setUser_Email(resultSet.getString("user_Email"));
                 bankingDto.setUser_Password(resultSet.getString("user_Password"));
                 bankingDto.setAddress(resultSet.getString("address"));
@@ -69,6 +69,9 @@ public class BankingDaoImpl implements BankingDao {
                 System.out.println("User Email:" + bankingDto.getUser_Email());
                 System.out.println("User Password:" + bankingDto.getUser_Password());
                 System.out.println("User Address:" + bankingDto.getAddress());
+
+                preparedStatement.close();
+                connection.close();
             } else {
                 throw new UserDetailsNotFoundException("User not found");
             }
@@ -82,8 +85,7 @@ public class BankingDaoImpl implements BankingDao {
     @Override
     public boolean updateUserNameByUserId(int userId, String userName) {
         boolean isUserNameUpdated = false;
-        try {
-            connection = DriverManager.getConnection(url, username, password);
+        try(Connection connection = DriverManager.getConnection(url, username, password)) {
             String query = "update banking_info set user_Name=? where user_Id=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, userName);
@@ -95,8 +97,13 @@ public class BankingDaoImpl implements BankingDao {
                 System.out.println("User Name Updated Successfully");
                 System.out.println("User Id:" + userId);
                 System.out.println("User Name:" + userName);
-            } else {
+
+                preparedStatement.close();
+                connection.close();
+            }
+            else if (rowsAffected==0) {
                 throw new UserNameUpadateFailsException("User not found");
+                
             }
         } catch (UserNameUpadateFailsException | SQLException e) {
             System.err.println(e.getMessage());
@@ -108,8 +115,7 @@ public class BankingDaoImpl implements BankingDao {
     @Override
     public boolean updatePasswordByUserId(int userId, String password) {
         boolean isPasswordUpdated = false;
-        try {
-            connection = DriverManager.getConnection(url, username, password);
+        try(Connection connection = DriverManager.getConnection(url, username, password)){
             String query = "update banking_info set user_Password=? where user_Id=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, password);
@@ -121,6 +127,9 @@ public class BankingDaoImpl implements BankingDao {
                 System.out.println("Password Updated Successfully");
                 System.out.println("User Id:" + userId);
                 System.out.println("User Password:" + password);
+
+                preparedStatement.close();
+                connection.close();
             } else {
                 throw new UserPasswordUpdateFailsException("User not found");
             }
@@ -136,8 +145,7 @@ public class BankingDaoImpl implements BankingDao {
     public boolean updateAddressByUserName(String address, String name) {
         boolean isAddressUpdated = false;
 
-        try {
-            connection = DriverManager.getConnection(url, username, password);
+        try (Connection  connection = DriverManager.getConnection(url, username, password)){
             String query = "update banking_info set address=? where user_Name=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, address);
@@ -149,6 +157,9 @@ public class BankingDaoImpl implements BankingDao {
                 System.out.println("Address Updated Successfully");
                 System.out.println("User Name:" + name);
                 System.out.println("User Address:" + address);
+
+                preparedStatement.close();
+                connection.close();
             } else {
                 throw new UserAddressUpdateFailsException("User not found");
             }
@@ -162,8 +173,7 @@ public class BankingDaoImpl implements BankingDao {
     @Override
     public boolean deleteDataByUserId(int userId) {
         boolean isDataDeleted = false;
-        try {
-            connection = DriverManager.getConnection(url, username, password);
+        try(Connection connection = DriverManager.getConnection(url, username, password)) {
             String query = "delete from banking_info where user_Id=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, userId);
@@ -173,6 +183,7 @@ public class BankingDaoImpl implements BankingDao {
                 isDataDeleted = true;
                 System.out.println("Data Deleted Successfully");
                 System.out.println("User Id:" + userId);
+
             } else {
                 throw new UserDeleteFailsException("User not found");
             }
@@ -186,8 +197,8 @@ public class BankingDaoImpl implements BankingDao {
 
     @Override
     public boolean getAllData() {
-        try {
-            connection = DriverManager.getConnection(url, username, password);
+        boolean isDataDeleted=false;
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
             String query = "select * from banking_info";
             Statement statement = connection.createStatement();
             ResultSet resultSet=statement.executeQuery(query);
@@ -204,8 +215,14 @@ public class BankingDaoImpl implements BankingDao {
                 System.out.println("UserName:" + bankingDto.getUser_Name());
                 System.out.println("UserPassword:" + bankingDto.getUser_Password());
                 System.out.println("UserAddress:" + bankingDto.getAddress());
+
+                isDataDeleted = true;
+
             }
-        } catch (Exception e) {
+            if (isDataDeleted==false) {
+                throw new UserGetAllDataFailsException("User not found");
+            }
+        } catch (UserGetAllDataFailsException |SQLException e) {
             System.err.println("Exception in getAllData()");
         }
         return false;
@@ -214,17 +231,20 @@ public class BankingDaoImpl implements BankingDao {
     @Override
     public boolean deleteAllData() {
         boolean isDataDeleted = false;
-        try {
-            connection = DriverManager.getConnection(url, username, password);
+        try(Connection connection = DriverManager.getConnection(url, username, password)) {
             String query = "delete from banking_info";
             Statement statement = connection.createStatement();
             statement.execute(query);
             isDataDeleted = true;
             System.out.println("All Data Deleted Successfully");
 
+            statement.close();
+            connection.close();
+
         } catch (Exception e) {
             System.err.println("Exception in deleteAllData()");
         }
         return isDataDeleted;
     }
+
 }
